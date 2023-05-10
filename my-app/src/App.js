@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import {useSelector, useDispatch} from 'react-redux'
-import {getAlldata} from "./Feature/gituserSlice"
+import {getAlldata} from "./Feature/gituserSlice";
+import Clock from './Components/Clock';
 function App()
 {
   const dispatch = useDispatch();
@@ -20,7 +21,8 @@ function App()
   }
   return (
     <div className="App">
-      <h1>Hello</h1>
+      <Clock />
+
       <button onClick={() => dispatch(getAlldata())}>get github</button>
 
       {
