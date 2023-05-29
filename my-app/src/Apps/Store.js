@@ -1,7 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit"
-import gitUser from "../Feature/gituserSlice"
+import counterReducer from "../Feature/gituserSlice";
+import postReducer from "../Feature/posts/postSlice"
+import userReducer from '../Feature/Users/userSlice'
 export const store = configureStore({
     reducer: {
-        app: gitUser,
+        counter: counterReducer,
+        posts: postReducer,
+        users: userReducer
     }
 })

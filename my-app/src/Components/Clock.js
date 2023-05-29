@@ -37,7 +37,6 @@ function Clock()
         const seconds = Math.floor(time % 60).toString().padStart(2, '0');
         return `${hours}:${minutes}:${seconds}`;
     };
-
     return (
         <div>
             <h1>{formatTime()}</h1>

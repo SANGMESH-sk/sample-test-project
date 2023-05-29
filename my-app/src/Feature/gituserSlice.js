@@ -1,36 +1,36 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 
-export const getAlldata = createAsyncThunk("gitUsers", async () =>
-{
-    const response = await fetch("https://api.github.com/users");
-    const result = response.json();
-    return result;
-})
-export const gitUser = createSlice({
-    name: 'gitUser',
-    initialState: {
-        users: [],
-        loading: false,
-        error: null
+const initialState = {
+    value: 0,
+}
+
+export const counterSlice = createSlice({
+    name: 'counter',
+    initialState,
+    reducers: {
+        increment: (state) =>
+        {
+            // Redux Toolkit allows us to write "mutating" logic in reducers. It
+            // doesn't actually mutate the state because it uses the Immer library,
+            // which detects changes to a "draft state" and produces a brand new
+            // immutable state based off those changes
+            state.value += 1
+        },
+        decrement: (state) =>
+        {
+            state.value -= 1
+        },
+        incrementByAmount: (state, action) =>
+        {
+            state.value += action.payload
+        },
     },
-    extraReducers: {
-        [getAlldata.pending]: (state, action) =>
-        {
-            state.loding = true;
-        },
-        [getAlldata.fulfilled]: (state, action) =>
-        {
-            state.loding = false;
-            state.users = action.payload;
-        },
-        [getAlldata.rejected]: (state, action) =>
-        {
-            state.loding = false;
-            state.error = action.payload;
-        }
-    }
 })
-export default gitUser.reducer
+
+// Action creators are generated for each case reducer function
+export const {increment, decrement, incrementByAmount} = counterSlice.actions
+
+export default counterSlice.reducer
 
 
 

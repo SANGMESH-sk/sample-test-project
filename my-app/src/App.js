@@ -1,36 +1,78 @@
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
-import {useSelector, useDispatch} from 'react-redux'
-import {getAlldata} from "./Feature/gituserSlice";
 import Clock from './Components/Clock';
+import Home from './Components/Login';
+import Counter from './Components/Counter';
+import PostList from "./Feature/posts/PostList"
+import AddPostForm from './Feature/posts/AddPost';
+import TextEditor from './Components/TextEditor';
+import './Components/TextEditor.css';
 function App()
 {
-  const dispatch = useDispatch();
-  const data = useSelector((state) =>
+  const [content, setContent] = useState('');
+  const [documentName, setDocumentName] = useState('');
+  const [isShared, setIsShared] = useState(false);
+
+  const Sidebar = () =>
   {
-    console.log("state", state)
-    return state.app
-  })
-  if (data.loading)
+    return (
+      <div className="sidebar">
+        <ul>
+          <li>
+            <a href="https://mail.google.com/">Gmail</a>
+          </li>
+          <li>
+            <a href="https://drive.google.com/">Google Drive</a>
+          </li>
+          <li>
+            <a href="https://calendar.google.com/">Google Calendar</a>
+          </li>
+          {/* Add more Google apps links as needed */}
+        </ul>
+      </div>
+    );
+  };
+  const handleContentChange = (event) =>
   {
-    return <h1>loading</h1>
-  }
-  if (data.error != null)
+    setContent(event.target.value);
+  };
+
+  const handleDocumentNameChange = (event) =>
   {
-    return <h2>{data.error}</h2>
-  }
+    setDocumentName(event.target.value);
+  };
+
+  const handleShareClick = () =>
+  {
+    setIsShared(true);
+  };
   return (
-    <div className="App">
-      <Clock />
+    <div className='app'>
 
-      <button onClick={() => dispatch(getAlldata())}>get github</button>
+      <div className="text-editor">
+        <Sidebar />
+        <div className="toolbar">
+          <input
+            type="text"
+            value={documentName}
+            onChange={handleDocumentNameChange}
+            placeholder="Document Name"
+          />
+          <button onClick={handleShareClick}>{isShared ? 'Shared' : 'Share'}</button>
+        </div>
+        <div className="background"></div>
+        <textarea
+          className="content"
+          value={content}
+          onChange={handleContentChange}
+          placeholder="Start typing..."
+        ></textarea>
+      </div>
+      <AddPostForm />
+      <PostList />
 
-      {
-        data.users.map((ele) => (
-          <li key={ele.id}>{ele.login}</li>
-        ))
-      }
     </div>
+
   );
 }
 export default App;
